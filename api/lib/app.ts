@@ -4,6 +4,7 @@ import Controller from 'interfaces/controller.interface';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import mongoose, { mongo } from 'mongoose';
+import { logger } from './middlewares/logger.middleware'
 
 export default class App {
     public app: express.Application;
@@ -24,6 +25,7 @@ export default class App {
     private initializeMiddlewares(): void {
         this.app.use(bodyParser.json());
         this.app.use(morgan('dev'));
+        this.app.use(logger);
     }
 
     public listen(): void {
