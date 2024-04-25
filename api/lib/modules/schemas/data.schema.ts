@@ -7,5 +7,5 @@ export const DataSchema: Schema = new Schema({
    image: { type: String, required: true },
 });
 
-export default model<IData>('Post-BG', DataSchema);
+export default model<IData>('Post-BGK', DataSchema);
 
