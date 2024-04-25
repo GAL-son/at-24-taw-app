@@ -3,6 +3,7 @@ import Controller from "../interfaces/controller.interface";
 import PasswordService from "../modules/services/password.service";
 import TokenService from "../modules/services/token.service";
 import UserService from "../modules/services/user.service";
+import { auth } from "../middlewares/auth.middleware";
 
 
 class UserController implements Controller {
@@ -19,8 +20,7 @@ class UserController implements Controller {
     private initializeRouters() {
         this.router.post(`${this.path}/create`, this.createNewOrUpdate);
         this.router.post(`${this.path}/auth`, this.authenticate);
-        this.router.delete(`${this.path}/logout/:userId`, this.removeHashSession);
-
+        this.router.delete(`${this.path}/logout/:userId`, auth, this.removeHashSession);
     }
 
     private removeHashSession = async (req: Request, res: Response, next: NextFunction) => {
@@ -44,7 +44,7 @@ class UserController implements Controller {
             }
             await this.passwordService.authorize(user.id, await this.passwordService.hashPassword(password));
             const token = await this.tokenService.create(user);
-            res.status(200).json(this.tokenService.getToken(token));
+            res.status(200).json({token: this.tokenService.getToken(token), user_id: user.id});
         } catch (error) {
             console.error(`Validation Error: ${error.message}`);
             res.status(401).json({ error: 'Unauthorized' });

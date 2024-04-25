@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import {IToken} from "../models/token.mode";
+import {IToken} from "../models/token.model";
 
 const tokenTypeEnum = {
    authorization: 'authorization'
