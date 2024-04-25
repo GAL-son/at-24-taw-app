@@ -34,7 +34,7 @@ class DataController implements Controller {
             response.status(200).json(testArr);
         }
     }
-
+    
     private getOne(request: Request, response: Response, next: NextFunction) {
         const id = parseInt(request.params.id);
 
