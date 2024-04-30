@@ -14,6 +14,7 @@ export const auth = (request: Request, response: Response, next: NextFunction) =
                 return response.status(400).send('Invalid token.'); // Send response on error
             }
             const user: IUser = decoded as IUser;
+
             next();
         });
     } else {

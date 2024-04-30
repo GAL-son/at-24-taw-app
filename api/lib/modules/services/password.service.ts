@@ -12,11 +12,11 @@ class PasswordService {
    }
 
    public async authorize(userId: string, password: string) {
-       try {
-           const result = await PasswordModel.findOne({ userId: userId, password: password });
-           if (result) {
-               return true;
-           }
+       try {        
+           const passworddata = await PasswordModel.findOne({userId: userId});
+           const result = await bcrypt.compare(password, passworddata.password);
+           
+           return result;
        } catch (error) {
            console.error('Wystąpił błąd podczas tworzenia danych:', error);
            throw new Error('Wystąpił błąd podczas tworzenia danych');
