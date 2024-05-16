@@ -1,8 +1,6 @@
 import { Component, Input, input } from '@angular/core';
 import { BlogItemImageComponent } from '../blog-item-image/blog-item-image.component';
 import { BlogItemTextComponent } from '../blog-item-text/blog-item-text.component';
-
-
 @Component({
   selector: 'blog-item',
   standalone: true,
