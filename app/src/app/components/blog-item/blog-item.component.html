@@ -3,6 +3,6 @@
     <blog-item-image [image]="image"></blog-item-image>
     <div class="card-body">
         <blog-item-text [text]="text"></blog-item-text>
-        <a class="btn btn-primary" [routerLink]="['/blog/details/1']" routerLinkActive="active">Więcej...</a>
+        <a class="btn btn-primary" [routerLink]="['/blog/details/' + this.id]" routerLinkActive="active">Więcej...</a>
     </div>
 </div>

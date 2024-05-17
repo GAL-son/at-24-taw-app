@@ -13,4 +13,5 @@ import { RouterModule } from '@angular/router';
 export class BlogItemComponent {
   @Input() image?: string;
   @Input() text?: string;
+  @Input() id?: string;
 }
