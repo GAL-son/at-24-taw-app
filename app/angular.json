@@ -68,7 +68,7 @@
             },
             "development": {
               "buildTarget": "app:build:development"
-            }
+            },
           },
           "defaultConfiguration": "development"
         },
