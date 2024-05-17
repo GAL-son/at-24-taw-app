@@ -9,14 +9,14 @@ export class FilterTextPipe implements PipeTransform {
   transform(value: any[], filterText: any): any {
     if(!value) {return [];}
     if(!filterText) {return value;}
-    filterText = filterText.toLowetCase();
+    filterText = filterText.toLowerCase();
 
     return value.filter(val => {
       if(!val.text) {
         return false;
       }
 
-      return val.text.toLowetCase().includes(filterText);
+      return val.text.toLowerCase().includes(filterText);
     })
   }
 
