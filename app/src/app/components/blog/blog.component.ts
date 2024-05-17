@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
   selector: 'blog',
   standalone: true,
   imports: [BlogItemComponent, CommonModule, HttpClientModule],
-  providers: [DataService],
+  providers: [DataService, ],
   templateUrl: './blog.component.html',
   styleUrl: './blog.component.css'
 })
