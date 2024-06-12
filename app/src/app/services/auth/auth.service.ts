@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { EMPTY, catchError, map, of, throwError } from 'rxjs';
 import { PassThrough } from 'stream';
 import { Token } from '../../models/model';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -16,6 +16,8 @@ export class AuthService {
   constructor(private http: HttpClient, @Inject(DOCUMENT) private document: Document) { }
 
   authenticate(credentials: any) {
+    console.log("CALL AUTH");
+    
     const localStorage = this.document.defaultView?.localStorage;
 
     return this.http.post(
@@ -25,13 +27,20 @@ export class AuthService {
         password: credentials.password
       }
     ).pipe(
+      catchError((err, caught) => {
+        console.error(err);
+        const error = new Error(err.message);
+        return throwError(() => error);
+      }),
       map((result: Token | any) => {
+        console.log(result);
+        
         if(result && result.token) {
           localStorage?.setItem('token', result.token);
           return true;
         }
         return false;
-      })
+      }),
     );
   }
 
@@ -74,10 +83,6 @@ export class AuthService {
     const localStorage = this.document.defaultView?.localStorage;
     return localStorage?.getItem('token');
   }
-
-  // get currentUser() {
-  //   const token =  
-  // }
 
 
 }

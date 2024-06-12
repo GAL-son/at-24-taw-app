@@ -4,11 +4,16 @@ import { BlogItemDetailsComponent } from './components/blog-item-details/blog-it
 import { BlogHomeComponent } from './components/blog-home/blog-home.component';
 import { HomeComponent } from './components/home/home.component';
 import { authGuard } from './services/auth/auth.guard';
+import { LoginComponent } from './components/login/login.component';
 
 export const routes: Routes = [
     {
         path: '',
         component: HomeComponent,
+    },
+    {
+        path: 'login',
+        component: LoginComponent,
     },
     {
         path: 'blog',
