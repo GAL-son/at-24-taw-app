@@ -60,7 +60,6 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    const localStorage = this.document.defaultView?.localStorage;
     const jwtHelper = new JwtHelperService();
     const token = this.getToken();
 
