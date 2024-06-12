@@ -10,15 +10,20 @@
                     Treść posta
                     <textarea rows="10" [(ngModel)]="post.text" type="text" class="form-textarea form-control" name="text" placeholder="" title="Tytuł Posta"></textarea>
                 </div>               
-                <div class="input-group mb-2">
-                    <input [(ngModel)]="post.imageUrl" type="text" class="form-control" name="image" placeholder="Adres obrazu" title="Adres Obrazu">
+                <div class="input-group mb-2 d-flex flex-column">
+                    Obraz posta
+                    <input [(ngModel)]="post.image" type="text" class="form-control w-100" name="image" placeholder="Adres obrazu" title="Adres Obrazu">
                 </div>    
-                <button type="submit" class="btn btn-success">Create post</button>           
+                <button (click)="send()" type="submit" class="btn btn-success">Create post</button>           
             </form>
         </div>
         <div class="image flex-shrink-1 d-flex flex-column  align-items-center">
             <p class="mb-5">Podgląd obrazu</p>
-            <img [src]="post.imageUrl" alt="" srcset="" placeholderImage>
+            <img [src]="post.image" alt="" srcset="" placeholderImage>
         </div>
+    </div>
+    <div *ngIf="wasSent" class="d-flex flex-column align-items-center">        
+        <div *ngIf="errorMessage==''" class="alert alert-success text-center w-50">Post was created sucessfully</div>
+        <div *ngIf="errorMessage != ''" class="alert alert-danger text-center w-50">Failed to send post</div>
     </div>
 </div>

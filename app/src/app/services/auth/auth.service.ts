@@ -15,9 +15,7 @@ export class AuthService {
 
   constructor(private http: HttpClient, @Inject(DOCUMENT) private document: Document) { }
 
-  authenticate(credentials: any) {
-    console.log("CALL AUTH");
-    
+  authenticate(credentials: any) {   
     const localStorage = this.document.defaultView?.localStorage;
 
     return this.http.post(
