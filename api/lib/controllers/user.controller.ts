@@ -59,6 +59,9 @@ class UserController implements Controller {
     private removeHashSession = async (req: Request, res: Response, next: NextFunction) => {
         const { userId } = req.params
 
+        console.log(userId);
+        
+
         try {
             const result = await this.tokenService.remove(userId);
             res.status(200).send(result);
@@ -67,6 +70,7 @@ class UserController implements Controller {
             res.status(401).json({ error: 'Unauthorized' });
         }
     }
+
     private authenticate = async (req: Request, res: Response, next: NextFunction) => {
         const { login, password } = req.body;
 
