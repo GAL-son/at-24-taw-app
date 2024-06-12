@@ -73,13 +73,14 @@ class UserController implements Controller {
         try {
             const user = await this.userService.getByEmailOrName(login);
             if (!user) {
-                res.status(401).json({ error: 'Unauthorized' });
+                res.status(401).json({ error: 'User Not found' });
+                return;
             }
 
             const authorized = await this.passwordService.authorize(user.id, password);
 
             if(!authorized) {
-                res.status(401).json({message: "Invalid password or email"});
+                res.status(401).json({message: "Invalid password"});
                 return;
             }
 
@@ -87,7 +88,7 @@ class UserController implements Controller {
             res.status(200).json(this.tokenService.getToken(token));
         } catch (error) {
             console.error(`Validation Error: ${error.message}`);
-            res.status(401).json({ error: 'Unauthorized' });
+            res.status(500).json({ error: 'UNKNOWN ERROR' });
         }
     }
     private createNewOrUpdate = async (req: Request, res: Response, next: NextFunction) => {
