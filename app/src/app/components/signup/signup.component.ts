@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -10,12 +11,21 @@ import { AuthService } from '../../services/auth/auth.service';
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
   public credentials = {
-    login: '',
+    name: '',
+    email: '',
     password: '',
-    email: ''
-  }
+  };
 
-  cons
+  constructor(private authService: AuthService, public router: Router) { }
+  ngOnInit(): void { }
+
+  create() {
+    this.authService.createOrUpdate(this.credentials)
+      .subscribe((result) => {
+        return result;
+      });
+    this.router.navigate(['/']);
+  }
 }
