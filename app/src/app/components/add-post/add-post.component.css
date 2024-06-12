@@ -1,0 +1,19 @@
+img {
+    display: block;
+    min-width: 60%;
+    max-width: 90%;
+    width: auto;
+    height: auto;
+    background-color: rgb(245, 245, 245);
+    border-radius: 20px;
+    box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.317);
+}
+
+.image {
+    width: 40%;
+}
+
+.form-textarea {
+    border-radius: 10px;
+    width: 100%;
+}
