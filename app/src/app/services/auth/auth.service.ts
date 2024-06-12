@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { PassThrough } from 'stream';
-import { Token } from '../models/model';
+import { Token } from '../../models/model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
