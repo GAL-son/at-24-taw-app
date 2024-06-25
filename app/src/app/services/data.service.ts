@@ -23,8 +23,8 @@ export class DataService {
 
   likePost(id: string, likeUpdate: number, dislikeUpdate: number) {
     const body = {
-      likes: likeUpdate,
-      dislikes: dislikeUpdate
+      like: likeUpdate,
+      dislike: dislikeUpdate
     }
 
     return this.http.patch(this.url + '/api/post/' + id + "/like", body);

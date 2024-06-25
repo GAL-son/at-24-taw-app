@@ -35,6 +35,7 @@ class DataController implements Controller {
     private likePost = async (req: Request, res: Response, next: NextFunction) => {
         const {like, dislike} = req.body;
         const {id} = req.params;
+        
 
         try {
             this.dataService.updateLikes(id, like, dislike);

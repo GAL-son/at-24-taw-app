@@ -59,8 +59,12 @@ class DataService {
     public updateLikes(id: string, likes: number, dislikes:number) {
         const post = this.findLikes(id);
 
+        console.log(post);
+        console.log(likes);
+        
         post.likes += likes;
         post.dislikes += dislikes;
+        console.log(post);
     }
 
     private generateLikes(posts: any) {
