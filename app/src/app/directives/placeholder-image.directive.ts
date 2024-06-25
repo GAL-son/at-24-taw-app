@@ -10,8 +10,6 @@ export class PlaceholderImageDirective {
 
   @HostListener('error')
   private onError() {    
-    // console.log("berfore: " + this.el.nativeElement.imageUrl);
     this.el.nativeElement.src = "assets/noImageIcon.png";
-    // console.log("berfore: " + this.el.nativeElement.imageUrl);
   }
 }

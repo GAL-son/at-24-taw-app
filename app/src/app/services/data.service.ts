@@ -13,7 +13,8 @@ export class DataService {
   }
 
   public getAll() {
-    return this.http.get(this.url + '/api/posts')
+    const posts = this.http.get(this.url + '/api/posts')
+    return posts;
   }
 
   getById(id: string) {

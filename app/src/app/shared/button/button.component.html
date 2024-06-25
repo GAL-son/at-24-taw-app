@@ -1,0 +1,4 @@
+<div  class="button d-flex flex-row align-items-center" [ngClass]="{'toggle-active': applyToggle()}" (click)="click(); $event.stopPropagation()" >
+    <img class="button-image" [src]="getImagePath()" alt="">    
+    <span>{{value}}</span>
+</div>

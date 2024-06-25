@@ -1,8 +1,17 @@
 
-<div class="card">
-    <blog-item-image [image]="image"></blog-item-image>
-    <div class="card-body">
-        <blog-item-text [text]="text"></blog-item-text>
-        <a class="btn btn-primary" [routerLink]="['/blog/details/' + this.id]" routerLinkActive="active">Więcej...</a>
+<div class="post flex-grow-1" (click)="goToPost()" routerLinkActive="active">
+    <blog-item-title class="card-title" [title]="title"></blog-item-title>
+    <div class="image-container">
+        <blog-item-image [image]="image"></blog-item-image>
+    </div>
+    <blog-item-text [text]="text"></blog-item-text>
+    <line color="rgb(202, 138, 0)" height="1px"></line>
+    <div class="d-flex flex-row">
+        <app-button [value]="getValue(likes)" image="assets/like" [toggle]="false" (onClick)="like($event)"></app-button>
+        <app-button [value]="getValue(dislikes)" image="assets/dislike" [toggle]="false"></app-button>
+        <div class="d-flex align-items-center">
+            <app-button value="Share" (onClick)="share()" image="assets/share"></app-button>
+            <span [ngClass]="{'active': copied}" class="copied  ms-1">Copied</span>
+        </div>
     </div>
 </div>

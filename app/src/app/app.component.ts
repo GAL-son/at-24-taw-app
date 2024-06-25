@@ -1,7 +1,8 @@
-import { Component } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import { RouterLink, RouterLinkActive, RouterOutlet } from "@angular/router";
 import { BlogComponent } from "./components/blog/blog.component";
 import { NavbarComponent } from "./components/navbar/navbar.component";
+import { DOCUMENT } from "@angular/common";
 
 @Component({
     selector: 'app-root',
@@ -12,8 +13,4 @@ import { NavbarComponent } from "./components/navbar/navbar.component";
 })
 
 export class AppComponent {
-    public counter: number = 0;
-
-    add() { this.counter++; }
-    remove() { this.counter--; }
 }

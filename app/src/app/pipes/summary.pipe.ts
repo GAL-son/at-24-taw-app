@@ -11,6 +11,6 @@ export class SummaryPipe implements PipeTransform {
       return null;
     }
 
-    return value.substring(0, limit) + '...';
+    return value.substring(0, limit) + ((value.length > limit) ? '...' : "");
   }
 }

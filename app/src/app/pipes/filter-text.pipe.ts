@@ -12,11 +12,11 @@ export class FilterTextPipe implements PipeTransform {
     filterText = filterText.toLowerCase();
 
     return value.filter(val => {
-      if(!val.text) {
+      if(!val.text && !val.title) {
         return false;
       }
 
-      return val.text.toLowerCase().includes(filterText);
+      return val.text.toLowerCase().includes(filterText) || val.title.toLowerCase().includes(filterText);
     })
   }
 

@@ -1,0 +1,31 @@
+.button {
+    transition: all ease-in-out 0.2s;
+
+    font-size: 10pt;
+    display: inline-block;
+    border: 1px solid rgb(190, 190, 190);
+    border-radius: 1000px;
+    margin: 1px;
+    padding: 1px 5px;
+    background-color: white;
+}
+
+.button:hover {
+    background-color: rgb(202, 138, 0);
+    border-color: #00000000;
+    color: #FFF;
+}
+
+.button-image {
+    height: 20px;
+    margin-right: 5px;
+}
+.button:hover .button-image {
+    filter: invert(100%);
+}
+
+.toggle-active {
+    background-color: rgb(202, 138, 0);
+    border-color: #00000000;
+    color: #FFF;
+}

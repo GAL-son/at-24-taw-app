@@ -34,7 +34,9 @@ export class LoginComponent implements OnInit {
       catchError((error) => (this.handleAuthError(error)))
     )
     .subscribe(
-      (result) => { // TODO: THIS SHIT AIN'T WORKIN      
+      (result) => {
+      console.log(result);
+        
       if(!result) {
         this.logged = false;   
         console.log("FAILED");             
