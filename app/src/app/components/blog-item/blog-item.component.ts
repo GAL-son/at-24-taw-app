@@ -39,6 +39,17 @@ export class BlogItemComponent implements OnInit {
     this.image = this.postData?.image ?? this.image;
     this.likes = this.postData?.likes ?? this.likes;
     this.dislikes = this.postData?.dislikes ?? this.dislikes
+
+    if(this.id == undefined) {
+      return;
+    }
+    const memeoryLike = this.memory.memoryGetLikeForPost(this.id);
+    if(memeoryLike) {
+      this.liked = true;
+    } else if(memeoryLike != null) {
+      this.disliked = true;
+    }
+
   }
 
   public liked: boolean = false;
@@ -68,6 +79,7 @@ export class BlogItemComponent implements OnInit {
     }
 
     if(like) {
+      // Post liked
       this.liked = $event;
       change.like = ($event) ? 1 : -1;
       if(this.liked && this.disliked) {
@@ -75,6 +87,7 @@ export class BlogItemComponent implements OnInit {
         change.dislike = -1;
       }
     } else {
+      // Post disliked
       this.disliked = $event;
       change.dislike = ($event) ? 1 : -1;
       if(this.disliked && this.liked) {
@@ -88,54 +101,24 @@ export class BlogItemComponent implements OnInit {
     this.dataService.likePost(id, change.like, change.dislike)
       .subscribe((res) => {
         let store: boolean | null = null;
-        if(change.like > change.dislike) {
-          store = true;
-        } else if (change.dislike > change.like) {
-          store = false;
+        console.log(change);
+
+        const sum = change.like + change.dislike;
+        
+        if(sum > 0) {
+          if(change.like == 1) {
+            store = true;
+          } else {
+            store == false;
+          }
         }
 
         this.memory.storeLikes(id, store);
+        this.likes += change.like;
+        this.dislikes += change.dislike;
       }
 
       );
-
-    this.liked = $event;
-    
-    if($event) {
-      this.likes++;
-      change.like = 1;
-      if(this.disliked) {
-        change.dislike = -1;
-        this.dislikes--;
-        this.disliked = false;
-      }
-      this.memory.storeLikes(this.id, true);
-    } else {
-      this.likes--;
-      change.like = -1;
-      this.memory.storeLikes(this.id, null);
-    }
-
-    this.dataService.likePost(this.id, change.like, change.dislike);
-  }
-  
-  public dislike($event: boolean) {
-    if(this.id==undefined) {
-      return;
-    }
-
-    this.disliked = $event;
-    if($event) {
-      this.dislikes++;
-      if(this.liked) {
-        this.likes--;
-      this.liked = false;
-      }
-      this.memory.storeLikes(this.id, false);
-    } else {
-      this.memory.storeLikes(this.id, null);
-      this.dislikes--;
-    }
   }
 
   public getPath(): string {

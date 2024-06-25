@@ -15,8 +15,11 @@ export class MemoryService {
     const localStorage = this.document.defaultView?.localStorage;
 
     const likes = this.getLikes();    
-    
+    console.log(likes);
     likes[id] = like;
+    console.log(likes);
+    console.log(JSON.stringify(likes));
+
 
     localStorage?.setItem("likes", JSON.stringify(likes));   
 
@@ -35,6 +38,9 @@ export class MemoryService {
   }
 
   public memoryGetLikeForPost(id:string) {
+    const likes = this.getLikes();
+    console.log(likes);
+    console.log(likes[id]);
     return this.getLikes()[id] ;
   }
 }
