@@ -21,6 +21,8 @@ class DataController implements Controller {
         this.router.get(`${this.path}/posts`, this.getPosts);
         this.router.get(`${this.path}/post/:id`, this.getPostById);
 
+        this.router.patch(`${this.path}/post/:id/like`, this.likePost);
+
         // // POST
         this.router.post(`${this.path}/post`, this.addPost);
         this.router.post(`${this.path}/post/:num`, checkPostCount, this.getPosts);
@@ -28,6 +30,19 @@ class DataController implements Controller {
         // // DELETE
         this.router.delete(`${this.path}/posts`, this.deleteData)
         this.router.delete(`${this.path}/post/:id`, this.deleteData)
+    }
+
+    private likePost = async (req: Request, res: Response, next: NextFunction) => {
+        const {like, dislike} = req.body;
+        const {id} = req.params;
+
+        try {
+            this.dataService.updateLikes(id, like, dislike);
+            return res.status(204).send();
+        } catch (error) {
+            console.error("Failed updating likes: " + error);
+            return res.status(500).send("Failed updating likes");
+        }   
     }
 
     private getPosts = async (req: Request, res: Response, next: NextFunction) => {

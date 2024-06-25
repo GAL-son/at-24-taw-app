@@ -56,6 +56,13 @@ class DataService {
         }
     }
 
+    public updateLikes(id: string, likes: number, dislikes:number) {
+        const post = this.findLikes(id);
+
+        post.likes += likes;
+        post.dislikes += dislikes;
+    }
+
     private generateLikes(posts: any) {
         posts.forEach((post: any) => {
             const likePost = this.findLikes(post.id);
@@ -75,6 +82,7 @@ class DataService {
             }
         });
     }
+
 
     private findLikes(id: string) {
         return this.likes.find(post => post.id == id);
