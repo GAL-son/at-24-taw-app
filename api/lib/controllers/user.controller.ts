@@ -5,8 +5,7 @@ import TokenService from "../modules/services/token.service";
 import UserService from "../modules/services/user.service";
 import { auth } from "../middlewares/auth.middleware";
 import { admin } from "../middlewares/admin.middleware";
-import { forbidden } from "joi";
-import { token } from "morgan";
+import { sendMail } from "../modules/services/email.service";
 
 
 class UserController implements Controller {
@@ -43,11 +42,23 @@ class UserController implements Controller {
                 return;
             }
             const newPassword = (Math.random() + 1).toString(36).substring(7);
-            console.log(newPassword);
-
-            await this.passwordService.createOrUpdate({userId: user._id, password: await this.passwordService.hashPassword(newPassword)})
-
+            const oldPassword = this.passwordService.getUserPassword(user.id);
+            console.log(newPassword);            
+            const mail = `
+            <h2>Reset hasła<h2>
+            
+            <p> Do twojego konta zostało przypisane tymczasowe hasło: <b>${newPassword}<b><p>
+            `;
             // HOW TF AM I SUPPOSED TO SEND A E-MAIL
+            try {
+                await sendMail("TAW APP", email, "Password Reset", mail);
+                await this.passwordService.createOrUpdate({userId: user._id, password: await this.passwordService.hashPassword(newPassword)})
+            } catch {
+                console.error("Failed reseting password");
+                res.status(500).json({error: "Failed reseting password"});
+                return;
+            }
+
             res.status(201).json({email: email, newPassword: newPassword})
             
         } catch (error) {
@@ -77,18 +88,21 @@ class UserController implements Controller {
         try {
             const user = await this.userService.getByEmailOrName(login);
             if (!user) {
+                console.warn("USER NOT FOUND");
                 res.status(401).json({ error: 'User Not found' });
                 return;
             }
-
+            
             const authorized = await this.passwordService.authorize(user.id, password);
-
+            
             if(!authorized) {
+                console.warn("USER NOT AUTHORIZED");
                 res.status(401).json({message: "Invalid password"});
                 return;
             }
-
+            
             const token = await this.tokenService.create(user);
+            console.info("Autehnticated successfully");
             res.status(200).json(this.tokenService.getToken(token));
         } catch (error) {
             console.error(`Validation Error: ${error.message}`);

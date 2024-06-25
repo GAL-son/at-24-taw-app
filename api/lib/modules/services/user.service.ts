@@ -29,7 +29,6 @@ class UserService {
         }
     }
 
-
     public async getAll() {
         try {
             return await UserModel.find({}).then((users)=> {

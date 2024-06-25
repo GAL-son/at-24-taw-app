@@ -35,6 +35,8 @@ class DataController implements Controller {
 
         try {
             let allPosts = await this.dataService.getAllPosts();
+            console.log(allPosts);
+            
 
             if (num !== undefined) {
                 allPosts = allPosts.slice(0, parseInt(num));
