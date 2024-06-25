@@ -1,4 +1,4 @@
-<div class="w-100 h-100 d-flex flex-column align-items-center">
+<div class="w-100 h-100 mb-5 mt-2 d-flex flex-column align-items-center">
     <div *ngIf="loading" class="loading w-100">
         <h1>Loading</h1>
         <div class="spinner-border" role="status">
@@ -17,18 +17,17 @@
                 ></post-actions>
             </div>
             <line color="rgb(202, 138, 0)" height="1px"></line>
-            <p>{{text}}</p>
-        
+            <p class="post-text">{{text}}</p>
+            
             <line color="rgb(202, 138, 0)" height="1px"></line>            
         </div>
         <div class="image-container">
             <blog-item-image [image]="image" (load)="onImageLoaded()"></blog-item-image>
         </div>
+        <line color="rgb(202, 138, 0)" height="1px"></line>
+        <div class="d-flex flex-column">
+            <div class="btn btn-danger" (click)="deletePost()">Delete Post</div>
+            <div *ngIf="errorMessage != ''" class="alert alert-danger">Failed to delete post: {{errorMessage}}</div>
+        </div>
     </div>
 </div>
-
-
-<!-- <img [src]="image" >
-<p>
- {{ text }}
-</p> -->

@@ -1,8 +1,9 @@
 import { Router, Request, Response, NextFunction, response } from "express";
 import Controller from "../interfaces/controller.interface";
 import { checkPostCount } from "../middlewares/postCheckCount.middleware";
+import { auth } from "../middlewares/auth.middleware";
 import DataService from "../modules/services/data.service";
-import { IData } from "modules/models/data.model";
+
 import Joi from "joi";
 
 let testArr = [4, 5, 6, 3, 5, 3, 7, 5, 13, 5, 6, 4, 3, 6, 3, 6];
@@ -18,24 +19,23 @@ class DataController implements Controller {
 
     private initializeRoutes = () => {
         // // GET
-        this.router.get(`${this.path}/posts`, this.getPosts);
-        this.router.get(`${this.path}/post/:id`, this.getPostById);
+        this.router.get(`${this.path}/posts`, auth, this.getPosts);
+        this.router.get(`${this.path}/post/:id`, auth, this.getPostById);
 
-        this.router.patch(`${this.path}/post/:id/like`, this.likePost);
+        this.router.patch(`${this.path}/post/:id/like`, auth,  this.likePost);
 
         // // POST
-        this.router.post(`${this.path}/post`, this.addPost);
-        this.router.post(`${this.path}/post/:num`, checkPostCount, this.getPosts);
+        this.router.post(`${this.path}/post`, auth,  this.addPost);
+        this.router.post(`${this.path}/post/:num`, auth, checkPostCount, this.getPosts);
 
         // // DELETE
-        this.router.delete(`${this.path}/posts`, this.deleteData)
-        this.router.delete(`${this.path}/post/:id`, this.deleteData)
+        this.router.delete(`${this.path}/posts`, auth, this.deleteData)
+        this.router.delete(`${this.path}/post/:id`, auth, this.deleteData)
     }
 
     private likePost = async (req: Request, res: Response, next: NextFunction) => {
         const {like, dislike} = req.body;
-        const {id} = req.params;
-        
+        const {id} = req.params;       
 
         try {
             this.dataService.updateLikes(id, like, dislike);

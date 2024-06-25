@@ -3,8 +3,6 @@ import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { EMPTY, catchError, finalize, of } from 'rxjs';
-import { debug, error } from 'console';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',

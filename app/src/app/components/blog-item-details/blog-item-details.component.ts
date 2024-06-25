@@ -1,16 +1,16 @@
-import { HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LineComponent } from '../../shared/line/line.component';
 import { BlogItemImageComponent } from '../blog-item-image/blog-item-image.component';
 import { CommonModule } from '@angular/common';
 import { PostActionsComponent } from '../../shared/post-actions/post-actions.component';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'blog-item-details',
   standalone: true,
-  imports: [HttpClientModule, LineComponent, BlogItemImageComponent, CommonModule, PostActionsComponent],
+  imports: [LineComponent, BlogItemImageComponent, CommonModule, PostActionsComponent],
   providers: [DataService],
   templateUrl: './blog-item-details.component.html',
   styleUrl: './blog-item-details.component.css'
@@ -24,8 +24,9 @@ export class BlogItemDetailsComponent implements OnInit {
   public id: string = "";
 
   public loading: boolean = true;
+  public errorMessage = "";
 
-  constructor(private service: DataService, private route: ActivatedRoute) {
+  constructor(private service: DataService, private route: ActivatedRoute, private router: Router) {
 
   }
 
@@ -48,5 +49,24 @@ export class BlogItemDetailsComponent implements OnInit {
 
   public onImageLoaded() {
     this.loading = false;
+  }
+
+  public deletePost() {
+    this.service.deletePost(this.id)
+    .pipe(catchError(this.handleDeleteError))
+    .subscribe(
+      (result) => {
+        if(result == false) {
+          
+        } else {
+          this.router.navigate(["/blog"])
+        }
+      }
+    )
+  }
+
+  handleDeleteError(error: Error) {
+    this.errorMessage = error.message;
+    return of(false);
   }
 }

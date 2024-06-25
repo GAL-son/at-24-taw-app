@@ -10,7 +10,7 @@ import { SortPostsPipe } from '../../pipes/sort-posts.pipe';
 @Component({
   selector: 'blog',
   standalone: true,
-  imports: [BlogItemComponent, CommonModule, HttpClientModule, FilterTextPipe, SortPostsPipe],
+  imports: [BlogItemComponent, CommonModule, FilterTextPipe, SortPostsPipe],
   providers: [DataService, ],
   templateUrl: './blog.component.html',
   styleUrl: './blog.component.css'

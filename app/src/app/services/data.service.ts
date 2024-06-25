@@ -29,5 +29,9 @@ export class DataService {
 
     return this.http.patch(this.url + '/api/post/' + id + "/like", body);
   }
+
+  deletePost(id: string) {
+    return this.http.delete(this.url + "/api/post/" + id);
+  }
 }
 

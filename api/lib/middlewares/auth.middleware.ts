@@ -4,7 +4,7 @@ import { config } from '../config';
 import { IUser } from "../modules/models/user.model";
 
 export const auth = (request: Request, response: Response, next: NextFunction) => {
-    // console.log(request);
+    console.log(request);
     let token = request.headers['x-auth-token'] || request.headers['authorization'];
     if (token && typeof token === 'string') {
         if (token.startsWith('Bearer ')) {

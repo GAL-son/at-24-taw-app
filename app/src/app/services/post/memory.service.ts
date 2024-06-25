@@ -44,7 +44,7 @@ export class MemoryService {
       if (change.like == 1) {
         store = true;
       } else {
-        store == false;
+        store = false;
       }
     }
 
