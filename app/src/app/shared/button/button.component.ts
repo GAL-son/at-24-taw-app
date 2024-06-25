@@ -22,10 +22,10 @@ export class ButtonComponent implements OnInit{
     if(this.toggle == undefined) {
       this.onClick.emit("");
     } else {
-      console.log("TOGGLE BTN");
+      console.log("TOGGLE BTN + " + this.toggle);
       
-      this.toggle = !this.toggle;
-      this.onClick.emit(this.toggle);
+      // this.toggle = !this.toggle;
+      this.onClick.emit(!this.toggle);
     }
   }  
 
