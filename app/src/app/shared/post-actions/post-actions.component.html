@@ -1,0 +1,8 @@
+<div class="d-flex flex-row">
+    <app-button [value]="getValue(likes)" image="assets/like" [toggle]="liked" (onClick)="like($event, true)"></app-button>
+    <app-button [value]="getValue(dislikes)" image="assets/dislike" [toggle]="disliked" (onClick)="like($event, false)"></app-button>
+    <div class="d-flex align-items-center">
+        <app-button value="Share" (onClick)="share()" image="assets/share"></app-button>
+        <span *ngIf="!displayAlert" [ngClass]="{'active': copied}" class="copied  ms-1">Copied</span>
+    </div>
+</div>

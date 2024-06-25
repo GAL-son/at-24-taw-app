@@ -1,0 +1,29 @@
+.post {
+    width: 60%;
+    background-color: aliceblue;
+    border: 1px gray solid;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.post-body {
+    width: 90%;
+    margin: 0px 50px;
+}
+
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 700px;
+}
+
+.loading .spinner-border {
+    color: rgb(238, 119, 0)
+}
+
+.image-container {
+    border-radius: 10px;
+    overflow: hidden;
+}

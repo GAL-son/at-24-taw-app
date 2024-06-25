@@ -35,6 +35,10 @@ export class BlogHomeComponent implements OnInit{
     this.sortBy = $event.target.value;    
   }
 
+  onChangeAsc($event: boolean) {
+    this.asc = $event;
+  }
+
   getName($event: string): void {
     this.filterText = $event;
   }

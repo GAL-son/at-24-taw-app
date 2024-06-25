@@ -19,13 +19,12 @@ export class SortPostsPipe implements PipeTransform {
       } else {
         valA = a[prop];
         valB = b[prop];
-      }
-     
+      }    
 
       if(valA == valB) return 0;
-        
+      const res = (valA > valB)? 1 : -1;
 
-      return (valA > valB)? 1 : -1; 
+      return (asc) ? res * -1 : res;
     })
 
   }

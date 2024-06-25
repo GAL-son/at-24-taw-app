@@ -8,10 +8,12 @@ import { LineComponent } from '../../shared/line/line.component';
 import { CommonModule } from '@angular/common';
 import { MemoryService } from '../../services/post/memory.service';
 import { DataService } from '../../services/data.service';
+import {Clipboard} from '@angular/cdk/clipboard';
+import { PostActionsComponent } from '../../shared/post-actions/post-actions.component';
 @Component({
   selector: 'blog-item',
   standalone: true,
-  imports: [CommonModule, BlogItemImageComponent, BlogItemTextComponent, BlogItemTitleComponent, ButtonComponent, LineComponent],
+  imports: [CommonModule, BlogItemImageComponent, BlogItemTextComponent, BlogItemTitleComponent, ButtonComponent, LineComponent, PostActionsComponent],
   providers: [MemoryService, DataService],
   templateUrl: './blog-item.component.html',
   styleUrl: './blog-item.component.css'
@@ -31,7 +33,7 @@ export class BlogItemComponent implements OnInit {
 
   public copied = false;
 
-  constructor(public memory: MemoryService, private dataService: DataService){}
+  constructor(public memory: MemoryService, private dataService: DataService, private clipboard: Clipboard ){}
 
   ngOnInit(): void {
     this.title = this.postData?.title ?? this.title;
@@ -60,7 +62,8 @@ export class BlogItemComponent implements OnInit {
   }
 
   public share() {
-    console.log("SHARE http://localhost:4200" + this.getPath());
+    // this.clipboard.writeText("http://localhost:4200" + this.getPath())
+    this.clipboard.copy("http://localhost:4200" + this.getPath());
     this.copied = true;
 
     setTimeout(() => {
@@ -68,58 +71,6 @@ export class BlogItemComponent implements OnInit {
     }, 2000)
   }
 
-  public like($event: boolean, like: boolean) {
-    const change = {
-      like: 0,
-      dislike: 0
-    }
-    
-    if(this.id==undefined) {
-      return;
-    }
-
-    if(like) {
-      // Post liked
-      this.liked = $event;
-      change.like = ($event) ? 1 : -1;
-      if(this.liked && this.disliked) {
-        this.disliked = false;
-        change.dislike = -1;
-      }
-    } else {
-      // Post disliked
-      this.disliked = $event;
-      change.dislike = ($event) ? 1 : -1;
-      if(this.disliked && this.liked) {
-        this.liked = false;
-        change.like = -1;
-      }
-    }
-
-    const id = this.id;
-
-    this.dataService.likePost(id, change.like, change.dislike)
-      .subscribe((res) => {
-        let store: boolean | null = null;
-        console.log(change);
-
-        const sum = change.like + change.dislike;
-        
-        if(sum > 0) {
-          if(change.like == 1) {
-            store = true;
-          } else {
-            store == false;
-          }
-        }
-
-        this.memory.storeLikes(id, store);
-        this.likes += change.like;
-        this.dislikes += change.dislike;
-      }
-
-      );
-  }
 
   public getPath(): string {
     return '/blog/details/' + this.id;

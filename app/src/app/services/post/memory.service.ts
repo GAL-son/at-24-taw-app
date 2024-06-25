@@ -10,18 +10,13 @@ export class MemoryService {
 
   constructor(@Inject(DOCUMENT) private document: Document) { }
 
-  storeLikes(id:string, like: boolean | null) {
-   
+  storeLikes(id: string, like: boolean | null) {
+
     const localStorage = this.document.defaultView?.localStorage;
 
-    const likes = this.getLikes();    
-    console.log(likes);
+    const likes = this.getLikes();
     likes[id] = like;
-    console.log(likes);
-    console.log(JSON.stringify(likes));
-
-
-    localStorage?.setItem("likes", JSON.stringify(likes));   
+    localStorage?.setItem("likes", JSON.stringify(likes));
 
   }
 
@@ -30,17 +25,29 @@ export class MemoryService {
 
     const likesMap = localStorage?.getItem("likes");
 
-    if(!likesMap) {  
+    if (!likesMap) {
       return {} as LikesForPost;
     } else {
       return JSON.parse(likesMap) as LikesForPost;
     }
   }
 
-  public memoryGetLikeForPost(id:string) {
-    const likes = this.getLikes();
-    console.log(likes);
-    console.log(likes[id]);
-    return this.getLikes()[id] ;
+  public memoryGetLikeForPost(id: string) {
+    return this.getLikes()[id];
+  }
+
+  public static parseLikesFromChange(change: any) {
+    let store: boolean | null = null;
+    const sum = change.like + change.dislike;
+
+    if (sum > 0) {
+      if (change.like == 1) {
+        store = true;
+      } else {
+        store == false;
+      }
+    }
+
+    return store;
   }
 }

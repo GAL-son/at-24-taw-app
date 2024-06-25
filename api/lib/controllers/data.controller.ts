@@ -50,14 +50,12 @@ class DataController implements Controller {
         const { num } = req.params;
 
         try {
-            let allPosts = await this.dataService.getAllPosts();
-            console.log(allPosts);
-            
+            let allPosts = await this.dataService.getAllPosts();            
 
             if (num !== undefined) {
                 allPosts = allPosts.slice(0, parseInt(num));
             }
-            res.status(200).json(allPosts);
+            res.status(200).json(allPosts.reverse());
         } catch (error) {
             console.error('Failed pulling posts:', error);
             res.status(500).send('Internal server error');
@@ -84,7 +82,7 @@ class DataController implements Controller {
         const schema = Joi.object({
             title: Joi.string().required(),
             text: Joi.string().required(),
-            image: Joi.string().uri().required()
+            image: Joi.string()
         });
 
         try {

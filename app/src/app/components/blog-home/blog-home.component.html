@@ -9,8 +9,8 @@
             <select (change)="onSortChange($event)" class="form-select ms-2 me-2" name="" id="">
                 <option *ngFor="let option of canSortBy" [value]="option.toLowerCase()">{{option}}</option>
             </select>
-            <app-button image="assets/sort"></app-button>
+            <app-button image="assets/sort" (onClick)="onChangeAsc($event)" [toggle]="asc"></app-button>
         </div>
     </div>
-    <blog [filterText]="filterText" [sortBy]="sortBy" style="width: 60%;"></blog>
+    <blog [filterText]="filterText" [sortBy]="sortBy" [sortAsc]="asc" style="width: 60%;"></blog>
 </div>

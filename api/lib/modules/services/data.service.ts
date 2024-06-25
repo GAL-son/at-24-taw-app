@@ -8,6 +8,10 @@ class DataService {
 
     constructor() {
         this.likes = new Array<IPost>();
+        PostModel.find({}, {__v:0})
+            .then((result) => {
+                this.generateLikes(result);
+            });
     }
 
     public async createPost(postParams: IData) {
@@ -28,7 +32,7 @@ class DataService {
 
     public async query(query: Query<number | string | boolean>) {
         try {
-            const result = await PostModel.find(query, { __v: 0, _id: 0 });
+            const result = await PostModel.find(query, { __v: 0,});            
             return this.parsePosts(result);
         } catch (error) {
             console.error('Querry failed:', error);
@@ -58,33 +62,31 @@ class DataService {
 
     public updateLikes(id: string, likes: number, dislikes:number) {
         const post = this.findLikes(id);
-
-        console.log(post);
-        console.log(likes);
-        
         post.likes += likes;
         post.dislikes += dislikes;
-        console.log(post);
     }
 
     private generateLikes(posts: any) {
         posts.forEach((post: any) => {
-            const likePost = this.findLikes(post.id);
-            console.log(likePost);
+            if(!post.id) {
+                return;
+            }
+            const likePost = this.findLikes(post.id);          
             
             if(likePost == undefined) {
-                const likesNum = Math.round(Math.random() * 1000);
-                const dislikesNum = Math.round(Math.random() * 1000);
+                const total = Math.round(Math.random() * 10000);
+                const dislikes = Math.random();
                 const postData: IPost = {
                     id: post.id,
-                    likes: likesNum,
-                    dislikes: dislikesNum
+                    likes: Math.floor(total * (1/dislikes)),
+                    dislikes: Math.floor(total * (dislikes))
                 }
 
                 this.likes.push(postData);
 
             }
         });
+
     }
 
 
@@ -93,9 +95,6 @@ class DataService {
     }
 
     private parsePosts(posts: any) {
-        this.generateLikes(posts);
-
-        console.log(this.likes);
         
         const parsed = posts.map((post: any) => {           
             const newPost = {
@@ -105,12 +104,6 @@ class DataService {
             delete(newPost.id)
             return newPost;
         })
-
-        console.log("PARSER--------------");
-        
-        console.log(parsed);
-        
-
         return parsed;
     }
 }

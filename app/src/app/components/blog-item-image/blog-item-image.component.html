@@ -1,1 +1,12 @@
-<img [src]="image" class="post-img">
+<div class="image-body d-flex flex-column align-items-center justify-content-center"
+[style.height]="(loading) ? '100px' : 'auto'">
+    <div *ngIf="loading">
+        <div class="loading spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <img 
+    [style.visibility]="(loading) ? 'hidden' : 'visible'"
+    [style.height]="(loading) ? '0px' : 'auto'"
+    [src]="image" class="post-img" (load)="onLoad()" hideEmptyImage (loadError)="onError($event)">
+</div>

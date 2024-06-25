@@ -1,9 +1,7 @@
-<div class="content w-100">
-    <div class="post-list d-flexflex-column flex-grow-1 ">
-        <div class="w-100 flex-grow-1" *ngFor="let item of items | filter:filterText | sortPosts:isEnabled():sortBy.toLowerCase():sortAsc">
-            <blog-item [post-data]="item" [id]="item._id" (onGoToPost)="goToPost($event)">
-            </blog-item>
-        </div>
+<div class="post-list d-flexflex-column flex-grow-1 ">
+    <div class="w-100 flex-grow-1" *ngFor="let item of items | filter:filterText | sortPosts:isEnabled():sortBy:sortAsc">
+        <blog-item [post-data]="item" [id]="item._id" (onGoToPost)="goToPost($event)">
+        </blog-item>
     </div>
 </div>
 

@@ -23,8 +23,6 @@ export class BlogComponent implements OnInit {
   public isEnabled() : boolean {
     return true
   }
-
-
   
   public items: any;
 
