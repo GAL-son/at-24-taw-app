@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { EMPTY, catchError, finalize, of } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterModule, CommonModule],
   providers: [AuthService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit {
   }
 
   public errorMessage = "";
+  public failed = false;
 
   public logged?: boolean;
   public logout?: boolean;
@@ -53,6 +55,7 @@ export class LoginComponent implements OnInit {
 
   handleAuthError(error: Error) {
     this.errorMessage = error.message;
+    this.failed = true;
     return of(false);    
   }
 }

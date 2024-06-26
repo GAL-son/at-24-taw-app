@@ -26,7 +26,7 @@ export class AuthService {
     ).pipe(
       catchError((err, caught) => {
         console.error(err);
-        const error = new Error(err.message);
+        const error = new Error("Incorrect Credentials");
         return throwError(() => error);
       }),
       map((result: Token | any) => {
@@ -50,6 +50,7 @@ export class AuthService {
     const localStorage = this.document.defaultView?.localStorage;
     return this.http.delete(this.url + '/user/logout/' + this.currentUser.userId) // TODO: make var
       .pipe(
+        catchError(err => {return of(false)}),
         map(() => {
           localStorage?.removeItem('token');
         })

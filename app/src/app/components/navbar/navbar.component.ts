@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
 import { LineComponent } from '../../shared/line/line.component';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -19,7 +20,11 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void { }
 
   signOut() {
-    this.authService.logout().subscribe((result: any) => {
+    this.authService.logout()
+    .pipe(
+      catchError((error) => {return of(false)})
+    )
+    .subscribe((result: any) => {
       this.router.navigate(['/']);
       return result;
     });

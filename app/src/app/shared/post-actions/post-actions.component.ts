@@ -80,7 +80,7 @@ export class PostActionsComponent implements OnInit {
   }
 
   public share() {
-    this.clipboard.copy("http://localhost:4200" + '/blog/details/' + this.id);
+    this.clipboard.copy("localhost:4200" + '/blog/details/' + this.id);
     this.copied = true;
 
     if(this.displayAlert) {

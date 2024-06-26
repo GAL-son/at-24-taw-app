@@ -1,19 +1,23 @@
-<div class="container">
+<div class="container login-main">
+    <h3>Login</h3>
     <form action="post" autocomplete="off" method="POST">
-        <div class="input-group">
-            <input [(ngModel)]="credentials.login" type="text" class="form-control" name="username" placeholder="Nazwa Użytkownika" title="Login">
+        <div class="input-group mb-1">
+            <input [(ngModel)]="credentials.login" type="text" class="form-control" name="username" placeholder="Username" title="Login">
         </div>
-        <div class="input-group">
-            <input [(ngModel)]="credentials.password" type="password" class="form-control" name="password" placeholder="Hasło" title="Password">
+        <div class="input-group mb-4">
+            <input [(ngModel)]="credentials.password" type="password" class="form-control" name="password" placeholder="password" title="Password">
         </div>
-        <a href="#">I forgot password</a>
+        <div class="d-flex flex-row justify-content-between align-items-center mb-2">
+            <button (click)="signIn()" class="btn btn-primary" type="submit" title="Przycisk Zaloguj">
+                Sign in
+            </button>
+            <a href="#" routerLink="/signup">I dont have account</a>
+        </div>
 
-        <div>
+        <div *ngIf="failed" class="alert alert-danger">
             {{errorMessage}}
         </div>
 
-        <button (click)="signIn()" class="btn btn-primary" type="submit" title="Przycisk Zaloguj">
-            Sign in
-        </button>
+        
     </form>
 </div>
